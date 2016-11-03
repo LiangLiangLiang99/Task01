@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>*登陆界面*</title>
+		<link rel="stylesheet" href="css/login.css" />
+		<script type="text/javascript" src="js/login.js" ></script>
+	</head>
+	<body>
+		<div class="main">
+		<h2>登陆</h2>
+		<form name="myform" action="index.html" method="post" onsubmit="return checkForm()">
+			<dl>
+				<dt>用户名：</dt>
+				<dd><input type="text" name="userName" id="userName"/></dd>
+			</dl>
+			<dl>
+				<dt>密&nbsp;&nbsp;&nbsp;码：</dt>
+				<dd><input type="password" name="userPwd" id="userPwd" /></dd>
+			</dl>
+			<dl>
+				<dt>邮&nbsp;&nbsp;&nbsp;箱：</dt>
+				<dd><input type="email" name="email" id="email" /></dd>
+			</dl>
+			<dl>
+				<dt>验证码：</dt>
+				<dd>
+					<input type="text" id="input" onblur="validate()" />
+					<input type="button" id="code" onclick="createCode()" />
+					<span id="msg"></span>
+				</dd>
+			</dl>
+			<input type="submit" value="提交" id="btn" />
+			<input type="reset" value="重置" id="btn" />
+		</form>
+		</div>
+		<script type="text/javascript">
+			var code; //在全局定义验证码
+			window.onload = function() {
+					createCode();
+				}
+				//创建验证码
+			function createCode() {
+				code = ""; 
+				var showCode=document.getElementById("code");//给验证码初始化，
+				//定义验证码长度，
+				//定义随机数，
+				//for循环遍历，
+				//取的随机数的索引
+				//根据索引取得随机数加到code上，
+				//把code值赋给验证码
+				var codeLength = 4;
+				var random = new Array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R',
+					'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');
+				for(var i = 0; i < codeLength; i++) {
+					var index = Math.floor(Math.random() * 36);
+				code += random[index];
+			}
+			showCode.value = code;
+			}
+			//校验验证码
+			function validate() {
+				//找到验证码后面，存放提示信息，获取输入框里输入的验证码并转化为大写，
+				//判断一下，若输入的长度为0，提示一下输入验证码，
+				//若输入的验证码与产生的验证码不一致时，提示一下，然后刷新验证码，清空文本框
+				var msg = document.getElementById("msg");
+				var inputCode = document.getElementById("input").value.toUpperCase();
+				if(inputCode.length <= 0) {
+					msg.innerHTML = "请输入验证码";
+					msg.style.color = "red";
+				} else if(inputCode != code) {
+					msg.innerHTML = "验证码错误";
+					msg.style.color = "green";
+					createCode();
+					document.getElementById("input").value = "";
+				} else {
+					msg.innerHTML = "输入正确";
+					msg.style.color = "green";
+				}
+
+			}
+		</script>
+	</body>
+
+</html>
